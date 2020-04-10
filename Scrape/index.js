@@ -1,6 +1,5 @@
-const cheerio = require('cheerio');
+import {walmart} from 'walmart.js'
 const http = require('http');
-const fetch = require('node-fetch');
 
 const runServer = (body) => {
     //console.log(body);
@@ -19,17 +18,17 @@ const runServer = (body) => {
         console.log(`Server running at http://${hostname}:${port}/`);
     });
 }
+//runServer('<h1>Saver</h1><p>Saving money made simple.</p>');
+/*
+const genericRetailerObj = {
+    'name': 'Bananas, bunch',
+    'retailer': 'Walmart',
+    'price': 1,
+    'unitPrice': 0.18,
+    'unit': 'lb',
+    'inStock': true,
+    'img': './imgs/thumbnail.png'
+}
+*/
 
-var url = 'https://www.walmart.com/search/?query=banana';
 
-fetch(url).then(response => response.text()
-).then((body) => {
-    //console.log(body)
-    runServer(body)
-    const $ = cheerio.load(body);
-    // Create JSON obj out of cheerio selector
-    var x = JSON.parse($("#searchContent").html())
-    console.log(JSON.parse(x.html()))
-}).catch((err) => {
-    console.log(err)
-})
