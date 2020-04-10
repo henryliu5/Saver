@@ -1,2 +1,2 @@
-# Shop-Save
+# Saver
 Saving money made simple.
