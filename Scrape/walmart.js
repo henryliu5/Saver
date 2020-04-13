@@ -1,28 +1,30 @@
 const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const url = 'https://www.walmart.com/search/?query=';
+let result = [];
 
-
-var getJSON = function (query) {
-    fetch(url + query).then(response => response.text()
+async function walmart (query) {
+    let response =  await fetch(url + query).then(response => response.text()
         ).then((body) => {
             const $ = cheerio.load(body);
             // Create JSON obj out of cheerio selector
-            var jsonObj = JSON.parse($("#searchContent").html())
-            // console.log(JSON.parse(x.html()))
+            var jsonObj = JSON.parse($("#searchContent").html());
+            return jsonObj;
         }).catch((err) => {
-            console.log(err)
-        })
+            console.log(err);
+    })
+    result.push(response);
+    return result;
 }
 
-function walmart (query) {
-    let result = []
-    data = getJSON(query)
-    return result
+async function print(){
+    await walmart('banana')
+    await walmart('apples')
+    console.log(result)
 }
+print()
 
-
-export {walmart};
+//export {walmart};
 
 // x = walmart('query') + target('query')
 // x is list of generics
