@@ -1,14 +1,15 @@
-import {walmart} from 'walmart.js'
+const walmart = require('./walmart.js');
+const target = require('./target.js');
 const http = require('http');
+const fetch = require('node-fetch');
 
 const runServer = (body) => {
-    //console.log(body);
-    // Creates info for server
+    // Server header information
     const server = http.createServer((req, res) => {
         res.statusCode = 200;
         // requires charset=UTF in header (or html body can contain meta UTF-8 tag)
         res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-        res.end(body)
+        res.end(body);
     })
 
     const hostname = '127.0.0.1';
@@ -30,5 +31,15 @@ const genericRetailerObj = {
     'img': './imgs/thumbnail.png'
 }
 */
+/*target.run('bananas')
+    .then(function (result) {
+        console.log(result);
+        runServer(result);
+    }).catch((err) => console.log(err));*/
 
-
+async function getTargetData(){
+    const html = await (target.run('bananas'));
+    console.log(html);
+    runServer(html);
+}
+getTargetData();
