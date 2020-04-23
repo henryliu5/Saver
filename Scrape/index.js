@@ -1,4 +1,4 @@
-const walmart = require('./walmart.js');
+//const walmart = require('./walmart.js');
 const target = require('./target.js');
 const http = require('http');
 const fetch = require('node-fetch');
@@ -20,26 +20,9 @@ const runServer = (body) => {
     });
 }
 //runServer('<h1>Saver</h1><p>Saving money made simple.</p>');
-/*
-const genericRetailerObj = {
-    'name': 'Bananas, bunch',
-    'retailer': 'Walmart',
-    'price': 1,
-    'unitPrice': 0.18,
-    'unit': 'lb',
-    'inStock': true,
-    'img': './imgs/thumbnail.png'
-}
-*/
-/*target.run('bananas')
-    .then(function (result) {
-        console.log(result);
-        runServer(result);
-    }).catch((err) => console.log(err));*/
 
 async function getTargetData(){
-    const html = await (target.run('bananas'));
-    console.log(html);
-    runServer(html);
+    var returnval = await target.getData('bananas', '10001')
+    console.log(returnval)
 }
 getTargetData();
