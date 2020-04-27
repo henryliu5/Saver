@@ -10,6 +10,7 @@ async function getData(query, desiredZip) {
     // Opens puppeteer browser
     const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
     const page = await browser.newPage();
+    await page.setViewport({ width: 1920, height: 1080 });
     // Navigate to search page and wait until it loads properly
     await page.goto(url + query);
     await page.waitForSelector('[data-test=product-title]');
@@ -30,7 +31,6 @@ async function getData(query, desiredZip) {
             console.log('Failed when creating new page');
         }
     }
-    console.log(result);
     var resolvedArray = await Promise.all(result);
     await browser.close();
     return resolvedArray;
@@ -39,6 +39,7 @@ async function getData(query, desiredZip) {
 // Gets product information from Target product page
 async function getItem(browser, desiredZip, url, rank) {
     const page = await browser.newPage();
+
     await page.goto(url);
     // Check zip code and fix it if incorrect
     await checkZipCode(page, desiredZip);
@@ -56,7 +57,7 @@ async function checkZipCode(page, desiredZip){
         await page.waitForSelector('[data-test="storeSearchValue"]');
         var zipCodeElement = await page.$('[data-test="storeSearchValue"]');
         let zipCode = await page.evaluate(el => el.textContent, zipCodeElement);
-        console.log("Default zip: " + zipCode)
+        //console.log("Default zip: " + zipCode)
 
         // If the zip code is incorrect, fix it
         if (zipCode != desiredZip) {
@@ -85,9 +86,8 @@ async function typeNewZipCode(page, zipCode) {
     await page.keyboard.type('\n');
     await page.waitFor(1000);
     // Go to first store, expand to show deatils
-    await page.keyboard.press("Tab");
-    await page.keyboard.press("Tab");
-    await page.keyboard.type('\n');
+    await page.waitForSelector('[class="Button-bwu3xu-0 hHzxma h-padding-a-none"]');
+    await page.click('[class="Button-bwu3xu-0 hHzxma h-padding-a-none"]');
     await page.waitForSelector('[data-test="chooseStoreModal-storeDetails-storeInformationSetAsMyStoreButton"]');
     // Set as store
     await page.keyboard.press("Tab");
