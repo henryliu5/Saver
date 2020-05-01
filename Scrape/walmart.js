@@ -1,5 +1,5 @@
-const cheerio = require('cheerio');
 const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
 const url = 'https://www.walmart.com/search/?query=';
 var zip;
 var time;
@@ -10,7 +10,7 @@ async function getData (query, requestedZip) {
     zip = requestedZip;
     time = Date.now();
     //launch puppeteer and configure userAgent
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({headless: true, defaultViewport: null});
     await browser.userAgent();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -33,7 +33,7 @@ async function getData (query, requestedZip) {
         productUrls.push('https://www.walmart.com' + productUrl);
     }
     //iterate through each productUrl and launch new puppeteer browser, asynchronously scrape all products
-    for(let i = 0; i < 4; i++) {
+    for(let i = 0; i < 3; i++) {
         let productBrowser = await puppeteer.launch({headless: false, defaultViewport: null});
         result.push(getItem(productBrowser, requestedZip, productUrls[i], i));
     }
@@ -48,7 +48,7 @@ async function getData (query, requestedZip) {
 async function getItem (browser, requestedZip, curUrl, rank) { 
     var itemTime = Date.now();
     try {
-        page = await browser.newPage();
+        const page = await browser.newPage();
         await page.setRequestInterception(true);
         page.on('request', (req) => {
             if(req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image') {
@@ -58,10 +58,11 @@ async function getItem (browser, requestedZip, curUrl, rank) {
             }
         });
         await page.goto(curUrl);
+        console.log(page.url());
         //update zipCode if necessary
         await checkZipCode(page, requestedZip);
-        await page.waitFor(1000);
         const html = await page.content();
+        browser.close();
         return getGenericObj(html, rank);
     } catch (err) {
         console.log("Error at " + curUrl + " Time taken: " + (Date.now() - itemTime));
@@ -74,16 +75,12 @@ async function checkZipCode(page, requestedZip) {
     var zipTime = Date.now();
     try {
         //wait for more delivery options to load and click on it
-        await page.waitForSelector('button[class="button launch-modal button--link"]');
-        await page.click('button[class="button launch-modal button--link"]');
-
-        //wait for zipCode input to load and check it.
-        await page.waitForSelector('input[aria-label="Enter ZIP code or city, state"]');
-        var zipCodeElement = await page.$('input[aria-label="Enter ZIP code or city, state"]');
-        let zipVal = await page.evaluate(el => el.getAttribute("value"), zipCodeElement);
+        await page.waitForSelector('button[data-tl-id="nd-zip"]');
+        var zipCodeElement = await page.$('button[data-tl-id="nd-zip"]');
+        let zipVal = await page.evaluate(el => el.textContent, zipCodeElement);
         console.log("Current zip: " + zipVal + ", Requested zip: " + requestedZip);
-
         if(zipVal != requestedZip) {
+            await page.click('button[data-tl-id="nd-zip"]');
             await updateZipCode(page, requestedZip);
         }
     } catch (err) {
@@ -95,25 +92,14 @@ async function checkZipCode(page, requestedZip) {
 async function updateZipCode (page, zipCode) {
     try {
         //wait for input field to load
-        const zipCodeField = await page.waitForSelector('input[aria-label="Enter ZIP code or city, state"]');
+        const zipCodeField = await page.waitForSelector('input[aria-describedby="zipcode-form-label"]');
+       
         //update zipCode
-        for(let i = 0; i < 5; i++) {
-            await zipCodeField.press('Backspace');
-        }
         await zipCodeField.type(zipCode);
-        await zipCodeField.type('\n');
-
-        var zipCodeElement = await page.$('input[aria-label="Enter ZIP code or city, state"]');
-        let zipVal = await page.evaluate(el => el.getAttribute("value"), zipCodeElement);
-        console.log("Current zip: " + zipVal);
-        zip = zipVal;
-
-        //return to product page
-        await page.waitForSelector('button[class="button icon-button modal-close"]');
-        await page.click('button[class="button icon-button modal-close"]');
-        
+        await page.waitForSelector('button[id="zipcode-form-submit-button"]');
+        await page.click('button[id="zipcode-form-submit-button"]');
     } catch(err) {
-        console.log("Failed to type zip. Time taken: " + (Date.now() - time));
+        console.log("Failed to type zip: " + page.url() + " Time taken: " + (Date.now() - time));
         console.log(err);
     }
 }
@@ -121,17 +107,15 @@ async function updateZipCode (page, zipCode) {
 //construct genericObj
 function getGenericObj (html, rank) {
     const $ = cheerio.load(html);
-    var jsonObj = JSON.parse($("#item").html()).item.product;
     var walmartObj = new Object();
     walmartObj.retailer = 'Walmart';
-    walmartObj.productName = jsonObj.midasContext.query;
-    console.log(walmartObj.productName);
+    walmartObj.productName = $('[class="prod-ProductTitle font-normal"]').attr('content');    
     walmartObj.price = parseFloat($('span[class="price display-inline-block arrange-fit price price--stylized"] > span[class="visuallyhidden"]').text().substring(1));
     unitPriceObj = $('div[class="display-inline-block-xs valign-bottom prod-PaddingBottom--xxs"] > div').text();
     walmartObj.unitPrice = parseFloat(unitPriceObj.substring(1, 5));
     walmartObj.unit = unitPriceObj.substring(8);
     walmartObj.inStock = $('div[class="fulfillment-text"] > span').html() == 'Pickup not available' ? false : true;
-    walmartObj.img = jsonObj.buyBox.products[0].images[0].url;
+    walmartObj.img = null;
     walmartObj.zipCode = zip;
     walmartObj.rank = rank;
     return walmartObj;
