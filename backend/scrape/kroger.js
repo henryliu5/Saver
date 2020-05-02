@@ -35,7 +35,7 @@ async function getLocations(zipCode) {
         // Use stored access token for location request
         let accessToken = await getAccessToken();
         // Filter chains to only Kroger stores
-        let url = `${apiBaseUrl}/v1/locations?filter.zipCode.near=${zipCode}`;
+        let url = `${apiBaseUrl}/v1/locations?filter.zipCode.near=${zipCode}&filter.chain=Kroger`;
         let response = await fetch(url, {
             method: "GET",
             cache: "no-cache",
@@ -45,7 +45,7 @@ async function getLocations(zipCode) {
             }
         });
         var responseObj = await response.json();
-        console.log(responseObj)
+        //console.log(responseObj)
         if(responseObj.data.length == 0){
             console.log("No Kroger locations found near this zip code");
             return null;
@@ -78,6 +78,7 @@ async function getData(query, zipCode) {
                 "Content-Type": "application/json; charset=utf-8"
             }
         });
+        console.log(response);
         // Push generic objects from response body into return
         let responseObj = await response.json();
         for (let i = 0; i < responseObj.data.length; i++) {

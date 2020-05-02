@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const kroger = require('./scrape/kroger.js');
 require('dotenv').config()
 
 
