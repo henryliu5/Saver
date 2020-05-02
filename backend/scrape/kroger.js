@@ -78,7 +78,7 @@ async function getData(query, zipCode) {
                 "Content-Type": "application/json; charset=utf-8"
             }
         });
-        console.log(response);
+        //console.log(response);
         // Push generic objects from response body into return
         let responseObj = await response.json();
         for (let i = 0; i < responseObj.data.length; i++) {
@@ -90,7 +90,7 @@ async function getData(query, zipCode) {
 
 // Converts product object from Kroger API into our generic object
 function getGenericObj(krogerObj, rank) {
-    console.log(krogerObj)
+    //console.log(krogerObj)
     var genericObj = new Object();
     try{
         genericObj.retailer = "Kroger";

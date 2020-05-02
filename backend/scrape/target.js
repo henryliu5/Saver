@@ -44,7 +44,7 @@ async function getItem(browser, desiredZip, url, rank) {
     // Check zip code and fix it if incorrect
     await checkZipCode(page, desiredZip);
     const html = await page.content();
-    browser.close();
+    await browser.close();
     return getGenericObj(html, rank);
 }
 
@@ -57,7 +57,6 @@ async function checkZipCode(page, desiredZip){
         await page.waitForSelector('[data-test="storeSearchValue"]');
         var zipCodeElement = await page.$('[data-test="storeSearchValue"]');
         let zipCode = await page.evaluate(el => el.textContent, zipCodeElement);
-        //console.log("Default zip: " + zipCode)
 
         // If the zip code is incorrect, fix it
         if (zipCode != desiredZip) {
@@ -100,6 +99,7 @@ async function typeNewZipCode(page, zipCode) {
 function getGenericObj(html, rank) {
     const $ = cheerio.load(html);
     var targetObj = new Object();
+    targetObj.retailer = 'Target';
     targetObj.productName = $('[data-test="product-title"]').text();
     targetObj.price = parseFloat(($('[data-test="product-price"]').text()).substring(1));
     targetObj.unitPrice = null;
