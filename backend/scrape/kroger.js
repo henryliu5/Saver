@@ -29,13 +29,15 @@ async function getAccessToken() {
     }
 }
 
+// TODO verify retailerSet integrity
+let retailerSet = new Set(['BAKERS', 'CITYMARKET', 'COPPS', 'DILLONS', 'FOOD4LESS', 'FOODSCO', 'FRED', 'FRED MEYER STORES', 'FRYS', 'GERBES', 'JAYC', 'KROGER', 'KINGSOOPERS', 'MARIANOS', 'METRO MARKET', 'MARIANOS', 'OWENS', 'PAYLESS', 'PICK N SAVE', 'QFC', 'RALPHS', 'RULER', 'SMITHS', 'TURKEY HILL MINIT MARKETS']);
 // Get location ID of desired store
 async function getLocations(zipCode) {
     try {
         // Use stored access token for location request
         let accessToken = await getAccessToken();
         // Filter chains to only Kroger stores
-        let url = `${apiBaseUrl}/v1/locations?filter.zipCode.near=${zipCode}&filter.chain=Kroger`;
+        let url = `${apiBaseUrl}/v1/locations?filter.zipCode.near=${zipCode}`;
         let response = await fetch(url, {
             method: "GET",
             cache: "no-cache",
@@ -45,12 +47,15 @@ async function getLocations(zipCode) {
             }
         });
         var responseObj = await response.json();
-        //console.log(responseObj)
-        if(responseObj.data.length == 0){
-            console.log("No Kroger locations found near this zip code");
-            return null;
+        // console.log(responseObj)
+        for (location of responseObj.data) {
+            if (retailerSet.has(location.chain)) {
+                //console.log(location);
+                return location.locationId;
+            }
         }
-        return responseObj.data[0].locationId;
+        console.log("No Kroger locations found near this zip code");
+        return null;
     } catch (error) {
         console.log('Failed to get location ID');
         console.log(responseObj);
@@ -92,7 +97,7 @@ async function getData(query, zipCode) {
 function getGenericObj(krogerObj, rank) {
     //console.log(krogerObj)
     var genericObj = new Object();
-    try{
+    try {
         genericObj.retailer = "Kroger";
         genericObj.productName = krogerObj.description;
         genericObj.price = krogerObj.items[0].price.regular;
@@ -102,7 +107,7 @@ function getGenericObj(krogerObj, rank) {
         genericObj.img = null;
         genericObj.zipCode = thisZip;
         genericObj.rank = rank;
-    } catch(error){
+    } catch (error) {
         genericObj.error = error;
         genericObj.originalObj = krogerObj;
     }
@@ -111,3 +116,25 @@ function getGenericObj(krogerObj, rank) {
 
 module.exports = { getData };
 
+async function getChains() {
+    try {
+        // Use stored access token for location request
+        let accessToken = await getAccessToken();
+        // Filter chains to only Kroger stores
+        let url = `${apiBaseUrl}/v1/chains`;
+        let response = await fetch(url, {
+            method: "GET",
+            cache: "no-cache",
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        });
+        var responseObj = await response.json();
+        console.log(responseObj)
+
+        return responseObj
+    } catch (error) {
+        console.error(error);
+    }
+}
