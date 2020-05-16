@@ -1,0 +1,578 @@
+﻿"Los Angeles, California",9818605
+"Cook, Illinois",5194675
+"Harris, Texas",4092459
+"Maricopa, Arizona",3817117
+"San Diego, California",3095313
+"Orange, California",3010232
+"Kings, New York",2504700
+"Miami-Dade, Florida",2496435
+"Dallas, Texas",2368139
+"Queens, New York",2230722
+"Riverside, California",2189641
+"San Bernardino, California",2035210
+"Clark, Nevada",1951269
+"King, Washington",1931249
+"Wayne, Michigan",1820584
+"Tarrant, Texas",1809034
+"Santa Clara, California",1781642
+"Broward, Florida",1748066
+"Bexar, Texas",1714773
+"New York, New York",1585873
+"Philadelphia, Pennsylvania",1526006
+"Alameda, California",1510271
+"Middlesex, Massachusetts",1503085
+"Suffolk, New York",1493350
+"Sacramento, California",1418788
+"Bronx, New York",1385108
+"Nassau, New York",1339532
+"Palm Beach, Florida",1320134
+"Cuyahoga, Ohio",1280122
+"Hillsborough, Florida",1229226
+"Allegheny, Pennsylvania",1223348
+"Oakland, Michigan",1202362
+"Franklin, Ohio",1163414
+"Hennepin, Minnesota",1152425
+"Orange, Florida",1145956
+"Fairfax, Virginia",1081726
+"Contra Costa, California",1049025
+"Salt Lake, Utah",1029655
+"Travis, Texas",1024266
+"St Louis, Missouri",998954
+"Pima, Arizona",980263
+"Montgomery, Maryland",971777
+"Honolulu, Hawaii",953207
+"Westchester, New York",949113
+"Milwaukee, Wisconsin",947735
+"Fresno, California",930450
+"Shelby, Tennessee",927644
+"Fulton, Georgia",920581
+"Mecklenburg, North Carolina",919628
+"Erie, New York",919040
+"DuPage, Illinois",916924
+"Fairfield, Connecticut",916829
+"Pinellas, Florida",916542
+"Bergen, New Jersey",905116
+"Marion, Indiana",903393
+"Wake, North Carolina",900993
+"Hartford, Connecticut",894014
+"Duval, Florida",864263
+"Prince George's, Maryland",863420
+"New Haven, Connecticut",862477
+"Macomb, Michigan",840978
+"Kern, California",839631
+"Ventura, California",823318
+"Middlesex, New Jersey",809858
+"Gwinnett, Georgia",805321
+"San Francisco, California",805235
+"Baltimore, Maryland",805029
+"Hamilton, Ohio",802374
+"El Paso, Texas",800647
+"Montgomery, Pennsylvania",799874
+"Worcester, Massachusetts",798552
+"Pierce, Washington",795225
+"Essex, New Jersey",783969
+"Collin, Texas",782341
+"Hidalgo, Texas",774769
+"Monroe, New York",744344
+"Essex, Massachusetts",743159
+"Jefferson, Kentucky",741096
+"Multnomah, Oregon",735334
+"Suffolk, Massachusetts",722023
+"Oklahoma, Oklahoma",718633
+"San Mateo, California",718451
+"Snohomish, Washington",713335
+"Lake, Illinois",703462
+"DeKalb, Georgia",691893
+"Cobb, Georgia",688078
+"San Joaquin, California",685306
+"Will, Illinois",677560
+"Jackson, Missouri",674158
+"Norfolk, Massachusetts",670850
+"Denton, Texas",662614
+"Bernalillo, New Mexico",662564
+"Jefferson, Alabama",658466
+"Hudson, New Jersey",634266
+"Monmouth, New Jersey",630380
+"Davidson, Tennessee",626681
+"Providence, Rhode Island",626667
+"Bucks, Pennsylvania",625249
+"El Paso, Colorado",622263
+"Baltimore, Maryland",620961
+"Lee, Florida",618754
+"Tulsa, Oklahoma",603403
+"Kent, Michigan",602622
+"Polk, Florida",602095
+"District of Columbia, District of Columbia",601723
+"Denver, Colorado",600158
+"Fort Bend, Texas",585375
+"Ocean, New Jersey",576567
+"Arapahoe, Colorado",572003
+"Delaware, Pennsylvania",558979
+"Bristol, Massachusetts",548285
+"Johnson, Kansas",544179
+"Brevard, Florida",543376
+"Summit, Ohio",541781
+"New Castle, Delaware",538479
+"Anne Arundel, Maryland",537656
+"Union, New Jersey",536499
+"Montgomery, Ohio",535153
+"Jefferson, Colorado",534543
+"Washington, Oregon",529710
+"Lancaster, Pennsylvania",519445
+"Douglas, Nebraska",517110
+"Utah, Utah",516564
+"Kane, Illinois",515269
+"Stanislaus, California",514453
+"Camden, New Jersey",513657
+"Ramsey, Minnesota",508640
+"Passaic, New Jersey",501226
+"Chester, Pennsylvania",498886
+"Sedgwick, Kansas",498365
+"Lake, Indiana",496005
+"Plymouth, Massachusetts",494919
+"Volusia, Florida",494593
+"Morris, New Jersey",492276
+"Guilford, North Carolina",488406
+"Dane, Wisconsin",488073
+"Sonoma, California",483878
+"Spokane, Washington",471221
+"Richmond, New York",468730
+"Onondaga, New York",467026
+"Pasco, Florida",464697
+"Hampden, Massachusetts",463490
+"Montgomery, Texas",455746
+"Greenville, South Carolina",451225
+"Burlington, New Jersey",448734
+"Tulare, California",442179
+"Lucas, Ohio",441815
+"Adams, Colorado",441603
+"East Baton Rouge, Louisiana",440171
+"Virginia Beach, Virginia",437994
+"York, Pennsylvania",434972
+"Jefferson, Louisiana",432552
+"Knox, Tennessee",432226
+"Polk, Iowa",430640
+"Genesee, Michigan",425790
+"Clark, Washington",425363
+"Santa Barbara, California",423895
+"Seminole, Florida",422718
+"Williamson, Texas",422679
+"Washoe, Nevada",421407
+"Monterey, California",415057
+"Solano, California",413344
+"Mobile, Alabama",412992
+"Berks, Pennsylvania",411442
+"Cameron, Texas",406220
+"Prince William, Virginia",402002
+"Hillsborough, New Hampshire",400721
+"Dakota, Minnesota",398552
+"Ada, Idaho",392365
+"Waukesha, Wisconsin",389891
+"Richland, South Carolina",384504
+"Pulaski, Arkansas",382748
+"Sarasota, Florida",379448
+"Clackamas, Oregon",375992
+"Pinal, Arizona",375770
+"Stark, Ohio",375586
+"Orange, New York",372813
+"Butler, Ohio",368130
+"Mercer, New Jersey",366513
+"Westmoreland, Pennsylvania",365169
+"St Charles, Missouri",360485
+"Allen, Indiana",355329
+"Lane, Oregon",351715
+"Forsyth, North Carolina",350670
+"Charleston, South Carolina",350209
+"Lehigh, Pennsylvania",349497
+"Placer, California",348432
+"Washtenaw, Michigan",344791
+"Orleans, Louisiana",343829
+"Nueces, Texas",340223
+"Hamilton, Tennessee",336463
+"Madison, Alabama",334811
+"Marion, Florida",331298
+"Anoka, Minnesota",330844
+"Somerset, New Jersey",323444
+"Manatee, Florida",322833
+"Collier, Florida",321520
+"Luzerne, Pennsylvania",320918
+"Cumberland, North Carolina",319431
+"St Louis, Missouri",319294
+"Chesterfield, Virginia",316236
+"Marion, Oregon",315335
+"Brazoria, Texas",313166
+"Loudoun, Virginia",312311
+"Rockland, New York",311687
+"Bell, Texas",310235
+"McHenry, Illinois",308760
+"Henrico, Virginia",306935
+"Davis, Utah",306479
+"Albany, New York",304204
+"Lorain, Ohio",301356
+"Larimer, Colorado",299630
+"Northampton, Pennsylvania",297735
+"Escambia, Florida",297619
+"Dutchess, New York",297488
+"Lake, Florida",297052
+"Fayette, Kentucky",295803
+"Winnebago, Illinois",295266
+"Rockingham, New Hampshire",295223
+"Boulder, Colorado",294567
+"Anchorage, Alaska",291826
+"Galveston, Texas",291309
+"Gloucester, New Jersey",288288
+"Howard, Maryland",287085
+"Douglas, Colorado",285465
+"Lancaster, Nebraska",285407
+"Spartanburg, South Carolina",284307
+"Cumberland, Maine",281674
+"Ingham, Michigan",280895
+"Erie, Pennsylvania",280566
+"Lubbock, Texas",278831
+"St Lucie, Florida",277789
+"Leon, Florida",275487
+"Greene, Missouri",275174
+"Hamilton, Indiana",274569
+"Atlantic, New Jersey",274549
+"New London, Connecticut",274055
+"St Clair, Illinois",270056
+"San Luis Obispo, California",269637
+"Horry, South Carolina",269291
+"Madison, Illinois",269282
+"Osceola, Florida",268685
+"Dauphin, Pennsylvania",268100
+"Durham, North Carolina",267587
+"St Joseph, Indiana",266931
+"Chatham, Georgia",265128
+"Ottawa, Michigan",263801
+"Rutherford, Tennessee",262604
+"Lexington, South Carolina",262391
+"Santa Cruz, California",262382
+"Clayton, Georgia",259424
+"Merced, California",255793
+"Cleveland, Oklahoma",255755
+"Caddo, Louisiana",254969
+"Weld, Colorado",252825
+"Marin, California",252409
+"Jefferson, Texas",252273
+"Thurston, Washington",252264
+"Kitsap, Washington",251133
+"Kalamazoo, Michigan",250331
+"Webb, Texas",250304
+"Brown, Wisconsin",248007
+"Alachua, Florida",247336
+"Hinds, Mississippi",245285
+"Harford, Maryland",244826
+"Yakima, Washington",243231
+"Norfolk, Virginia",242803
+"Mahoning, Ohio",238823
+"Buncombe, North Carolina",238318
+"Washington, Minnesota",238136
+"Cumberland, Pennsylvania",235406
+"McLennan, Texas",234906
+"Oneida, New York",234878
+"St Tammany, Louisiana",233740
+"Frederick, Maryland",233385
+"Weber, Utah",231236
+"Lake, Ohio",230041
+"Montgomery, Alabama",229363
+"York, South Carolina",226073
+"Chesapeake, Virginia",222209
+"Clay, Missouri",221939
+"Lafayette, Louisiana",221578
+"Benton, Arkansas",221339
+"Butte, California",220000
+"Saratoga, New York",219607
+"Jefferson, Missouri",218733
+"Niagara, New York",216469
+"Barnstable, Massachusetts",215888
+"Lackawanna, Pennsylvania",214437
+"Cherokee, Georgia",214346
+"Warren, Ohio",212693
+"Linn, Iowa",211226
+"Yavapai, Arizona",211033
+"Trumbull, Ohio",210312
+"Smith, Texas",209714
+"Doña Ana, New Mexico",209233
+"Washington, Pennsylvania",207820
+"Arlington, Virginia",207627
+"Gaston, North Carolina",206086
+"Richmond, Virginia",204214
+"Henry, Georgia",203922
+"Jackson, Oregon",203206
+"Washington, Arkansas",203065
+"New Hanover, North Carolina",202667
+"Union, North Carolina",201292
+"Whatcom, Washington",201140
+"Champaign, Illinois",201081
+"Yolo, California",200849
+"Broome, New York",200600
+"Richmond, Georgia",200549
+"St Louis, Minnesota",200226
+"Mohave, Arizona",200186
+"Saginaw, Michigan",200169
+"Elkhart, Indiana",197559
+"Sangamon, Illinois",197465
+"Clermont, Ohio",197363
+"Sussex, Delaware",197145
+"York, Maine",197131
+"Yuma, Arizona",195751
+"Racine, Wisconsin",195408
+"Shelby, Alabama",195085
+"Brazos, Texas",194851
+"Tuscaloosa, Alabama",194656
+"Kanawha, West Virginia",193063
+"Calcasieu, Louisiana",192768
+"Clay, Florida",190865
+"St Johns, Florida",190039
+"Litchfield, Connecticut",189927
+"Muscogee, Georgia",189885
+"Canyon, Idaho",188923
+"Anderson, South Carolina",187126
+"Harrison, Mississippi",187105
+"Peoria, Illinois",186494
+"Hawaii, Hawaii",185079
+"Butler, Pennsylvania",183862
+"Williamson, Tennessee",183182
+"Ulster, New York",182493
+"Baldwin, Alabama",182265
+"El Dorado, California",181058
+"Livingston, Michigan",180967
+"Okaloosa, Florida",180822
+"Newport News, Virginia",180719
+"Vanderburgh, Indiana",179703
+"Hall, Georgia",179684
+"Cabarrus, North Carolina",178011
+"Shawnee, Kansas",177934
+"Berkeley, South Carolina",177843
+"Onslow, North Carolina",177772
+"Shasta, California",177223
+"Outagamie, Wisconsin",176695
+"Forsyth, Georgia",175511
+"Benton, Washington",175177
+"Imperial, California",174528
+"Delaware, Ohio",174214
+"Tippecanoe, Indiana",172780
+"Hernando, Florida",172778
+"Medina, Ohio",172332
+"Montgomery, Tennessee",172331
+"Muskegon, Michigan",172188
+"Beaver, Pennsylvania",170539
+"Monroe, Pennsylvania",169842
+"McLean, Illinois",169572
+"Minnehaha, South Dakota",169468
+"Johnston, North Carolina",168878
+"Bay, Florida",168852
+"Pitt, North Carolina",168148
+"Carroll, Maryland",167134
+"Winnebago, Wisconsin",166994
+"Licking, Ohio",166492
+"Kenosha, Wisconsin",166426
+"Kent, Rhode Island",166158
+"Middlesex, Connecticut",165676
+"Scott, Iowa",165224
+"Porter, Indiana",164343
+"St Clair, Michigan",163040
+"Davidson, North Carolina",162878
+"Boone, Missouri",162642
+"Kent, Delaware",162310
+"Beaufort, South Carolina",162233
+"Greene, Ohio",161573
+"Portage, Ohio",161419
+"DeSoto, Mississippi",161252
+"Sumner, Tennessee",160645
+"Rock, Wisconsin",160331
+"Jackson, Michigan",160248
+"Aiken, South Carolina",160099
+"Charlotte, Florida",159978
+"Kenton, Kentucky",159720
+"Iredell, North Carolina",159437
+"Rensselaer, New York",159429
+"Pueblo, Colorado",159063
+"Sarpy, Nebraska",158840
+"Hampshire, Massachusetts",158080
+"Deschutes, Oregon",157733
+"Wyandotte, Kansas",157505
+"Hays, Texas",157107
+"Cumberland, New Jersey",156898
+"Sullivan, Tennessee",156823
+"Berrien, Michigan",156813
+"Chittenden, Vermont",156545
+"Bibb, Georgia",155547
+"Maui, Hawaii",154834
+"Schenectady, New York",154727
+"Catawba, North Carolina",154358
+"Centre, Pennsylvania",153990
+"Penobscot, Maine",153923
+"Ouachita, Louisiana",153720
+"Kings, California",152982
+"Tolland, Connecticut",152691
+"Monroe, Michigan",152021
+"Santa Rosa, Florida",151372
+"Alamance, North Carolina",151131
+"Johnson, Texas",150934
+"Madera, California",150865
+"Stearns, Minnesota",150642
+"Cass, North Dakota",149778
+"Franklin, Pennsylvania",149618
+"Ellis, Texas",149610
+"Sussex, New Jersey",149265
+"Schuylkill, Pennsylvania",148289
+"Yellowstone, Montana",147972
+"Rock Island, Illinois",147546
+"Washington, Maryland",147430
+"Mesa, Colorado",146723
+"Charles, Maryland",146551
+"Merrimack, New Hampshire",146445
+"Martin, Florida",146318
+"Fairfield, Ohio",146156
+"Hendricks, Indiana",145448
+"Olmsted, Minnesota",144248
+"Santa Fe, New Mexico",144170
+"Cambria, Pennsylvania",143679
+"Paulding, Georgia",142324
+"Randolph, North Carolina",141752
+"Rankin, Mississippi",141617
+"Citrus, Florida",141236
+"Lee, Alabama",140247
+"Alexandria, Virginia",139966
+"Houston, Georgia",139900
+"Jackson, Mississippi",139668
+"Johnson, Indiana",139654
+"Kootenai, Idaho",138494
+"Rowan, North Carolina",138428
+"Clark, Ohio",138333
+"Washington, Utah",138115
+"Indian River, Florida",138028
+"Monroe, Indiana",137974
+"Hampton, Virginia",137436
+"Ector, Texas",137130
+"Florence, South Carolina",136885
+"Midland, Texas",136872
+"Fayette, Pennsylvania",136606
+"Dorchester, South Carolina",136555
+"Napa, California",136484
+"Calhoun, Michigan",136146
+"Tazewell, Illinois",135394
+"Chautauqua, New York",134905
+"Humboldt, California",134623
+"Coconino, Arizona",134421
+"Robeson, North Carolina",134168
+"Marathon, Wisconsin",134063
+"Orange, North Carolina",133801
+"Lebanon, Pennsylvania",133568
+"Douglas, Georgia",132403
+"Washington, Wisconsin",131887
+"Madison, Indiana",131636
+"Rapides, Louisiana",131613
+"Sandoval, New Mexico",131561
+"Guadalupe, Texas",131533
+"Taylor, Texas",131506
+"Wichita, Texas",131500
+"Cochise, Arizona",131346
+"Berkshire, Massachusetts",131219
+"Black Hawk, Iowa",131090
+"Johnson, Iowa",130882
+"San Juan, New Mexico",130044
+"Scott, Minnesota",129928
+"Stafford, Virginia",128961
+"Hunterdon, New Jersey",128349
+"Livingston, Louisiana",128026
+"Coweta, Georgia",127317
+"Blair, Pennsylvania",127089
+"Washington, Rhode Island",126979
+"Sebastian, Arkansas",125744
+"Wood, Ohio",125488
+"Wright, Minnesota",124700
+"Richland, Ohio",124475
+"Comanche, Oklahoma",124098
+"Columbia, Georgia",124053
+"Strafford, New Hampshire",123143
+"Blount, Tennessee",123010
+"Washington, Tennessee",122979
+"Wayne, North Carolina",122623
+"Spotsylvania, Virginia",122397
+"Kennebec, Maine",122151
+"Oswego, New York",122109
+"Gregg, Texas",121730
+"Tangipahoa, Louisiana",121097
+"Potter, Texas",121073
+"Grayson, Texas",120877
+"Randall, Texas",120725
+"Morgan, Alabama",119490
+"Pickens, South Carolina",119224
+"Boone, Kentucky",118811
+"Calhoun, Alabama",118572
+"Windham, Connecticut",118428
+"Delaware, Indiana",117671
+"Jasper, Missouri",117404
+"Bossier, Louisiana",116979
+"Parker, Texas",116927
+"Skagit, Washington",116901
+"Clarke, Georgia",116714
+"Linn, Oregon",116672
+"Mercer, Pennsylvania",116638
+"Jefferson, New York",116229
+"Lycoming, Pennsylvania",116111
+"Canadian, Oklahoma",115541
+"Sheboygan, Wisconsin",115507
+"Kendall, Illinois",114736
+"Harnett, North Carolina",114678
+"La Crosse, Wisconsin",114638
+"Wayne, Ohio",114520
+"Wilson, Tennessee",113993
+"LaSalle, Illinois",113924
+"Warren, Kentucky",113792
+"Kankakee, Illinois",113449
+"Faulkner, Arkansas",113237
+"Cache, Utah",112656
+"St Lawrence, New York",111944
+"Terrebonne, Louisiana",111860
+"LaPorte, Indiana",111467
+"Allegan, Michigan",111408
+"Douglas, Kansas",110826
+"Macon, Illinois",110768
+"Carroll, Georgia",110527
+"Clark, Indiana",110232
+"Tom Green, Texas",110224
+"Missoula, Montana",109299
+"Lowndes, Georgia",109233
+"Warren, New Jersey",108692
+"Comal, Texas",108472
+"Ontario, New York",107931
+"Vigo, Indiana",107848
+"Columbiana, Ohio",107841
+"Bay, Michigan",107771
+"Eaton, Michigan",107759
+"Androscoggin, Maine",107702
+"Douglas, Oregon",107667
+"Sumter, South Carolina",107456
+"Navajo, Arizona",107449
+"Brunswick, North Carolina",107431
+"Ascension, Louisiana",107215
+"Saline, Arkansas",107118
+"Henderson, North Carolina",106740
+"Fayette, Georgia",106567
+"Allen, Ohio",106331
+"Hardin, Kentucky",105543
+"DeKalb, Illinois",105160
+"St Mary's, Maryland",105151
+"Etowah, Alabama",104430
+"Bonneville, Idaho",104234
+"Berkeley, West Virginia",104169
+"Craven, North Carolina",103505
+"Kaufman, Texas",103350
+"Whitfield, Georgia",102599
+"Miami, Ohio",102506
+"Cowlitz, Washington",102410
+"Walworth, Wisconsin",102228
+"Woodbury, Iowa",102172
+"Fond du Lac, Wisconsin",101633
+"Tompkins, New York",101564
+"Houston, Alabama",101547
+"Ashtabula, Ohio",101497
+"Franklin, Missouri",101492
+"Adams, Pennsylvania",101407
+"Cecil, Maryland",101108
+"Pennington, South Dakota",100948
+"Bartow, Georgia",100157

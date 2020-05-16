@@ -138,8 +138,3 @@ async function getChains() {
         console.error(error);
     }
 } 
-async function test(){
-    var res = await getData('bananas', '60404');
-    console.log(res);
-}
-test();
