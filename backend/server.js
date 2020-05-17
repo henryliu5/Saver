@@ -14,6 +14,10 @@ require('dotenv').config();
 // 1m 20s 75028
 // 1m 24s 10001
 
+// 5/17/20 w/ parallelization of queries
+// 0m 36s 75028
+// 0m 29s 10001
+
 const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
 
 const uri = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@saver-cluster-d2gru.mongodb.net/test?retryWrites=true&w=majority`;
@@ -25,9 +29,12 @@ async function main(){
         await client.connect();
         await parseCsv.parseCsv(client);
         // Make the appropriate DB calls
+        // Run whole batch of queries in parallel
+        var instances = [];
         for(query of testPhrases){
-            await addQuery(client, query, '10001');
+            instances.push(addQuery(client, query, '75028'));
         }
+        await Promise.all(instances);
         
         // Use searchBeta aggregation pipeline to test MongoDB Atlas natural language search
         //var stuff = await client.db('product_info').collection('75028').aggregate({ $searchBeta: { "search": { "query": "a banana" } } }).toArray();
