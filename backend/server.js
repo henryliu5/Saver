@@ -5,11 +5,14 @@ const target = require('./scrape/target.js');
 const retailers = [kroger, target];
 require('dotenv').config();
 
-// Took 2m 20s for Kroger and Target
 // 5/15/20
 // 2m 30s 75028
 // 4m 45s 10001
 // 4m 7s 60639
+
+// 5/17/20
+// 1m 20s 75028
+// 1m 24s 10001
 
 const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
 
@@ -23,7 +26,7 @@ async function main(){
         await parseCsv.parseCsv(client);
         // Make the appropriate DB calls
         for(query of testPhrases){
-            await addQuery(client, query, '78705');
+            await addQuery(client, query, '10001');
         }
         
         // Use searchBeta aggregation pipeline to test MongoDB Atlas natural language search

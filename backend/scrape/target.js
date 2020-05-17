@@ -10,100 +10,74 @@ async function getData(query, desiredZip) {
     // Opens puppeteer browser
     const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
     const page = await browser.newPage();
+    await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
     await page.setViewport({ width: 1920, height: 1080 });
     // Navigate to search page and wait until it loads properly
-    await page.goto(url + query);
-    await page.waitForSelector('[data-test=product-title]');
+    await page.goto(url + query, { waitUntil: 'networkidle2'});
+
+    await checkZipCode(page, desiredZip);
+
     // Select all elements that match the product-title selctor NOTE: Will be first six bc of viewport, others will not have loaded
-    const allElements = await page.$$('[data-test=product-title]');
+    await page.waitForSelector('[data-test=product-title]');
+    await page.waitForSelector('[data-test="product-price"]');
+    var productTitles = [];
+    var productPrices = [];
+    let html = await page.content();
+    const $ = cheerio.load(html);
+    $('[data-test=product-title]').each(function (i) {
+        productTitles[i] = $(this).text();
+    });
+    $('[data-test="product-price"]').each(function (i) {
+        productPrices[i] = $(this).text();
+    });
     // Get URLs from all elements
-    var productUrls = [];
-    for (ele of allElements) {
-        let productURL = await page.evaluate(body => body.getAttribute('href'), ele);
-        productUrls.push('https://www.target.com' + productURL);
+    for (var i = 0; i < productTitles.length; i++) {
+        result.push(getGenericObj(productTitles[i], productPrices[i], i));
     }
-    // Iterate through product URLS, open a new browser for each page so puppeteer can work async
-    for (let i = 0; i < productUrls.length; i++) {
-        try {
-            let newBrowser = await puppeteer.launch({ headless: true, defaultViewport: null });
-            result.push(getItem(newBrowser, desiredZip, productUrls[i], i))
-        } catch{
-            console.log('Failed when creating new page');
-        }
-    }
-    var resolvedArray = await Promise.all(result);
     await browser.close();
-    return resolvedArray;
+    return result;
 };
 
-// Gets product information from Target product page
-async function getItem(browser, desiredZip, url, rank) {
-    const page = await browser.newPage();
-
-    await page.goto(url);
-    // Check zip code and fix it if incorrect
-    await checkZipCode(page, desiredZip);
-    const html = await page.content();
-    await browser.close();
-    return getGenericObj(html, rank);
-}
-
-async function checkZipCode(page, desiredZip){
-    try {
-        await page.waitForSelector('[data-test="fiatsButton"]');
-        // Click on edit store button
-        await page.click('[data-test="fiatsButton"]');
-        // Check the current zipCode
-        await page.waitForSelector('[data-test="storeSearchValue"]');
-        var zipCodeElement = await page.$('[data-test="storeSearchValue"]');
-        let zipCode = await page.evaluate(el => el.textContent, zipCodeElement);
-
-        // If the zip code is incorrect, fix it
-        if (zipCode != desiredZip) {
-            await typeNewZipCode(page, desiredZip);
-        }
-        // Expand page content
-        await page.waitForSelector('[data-test="toggleContentButton"]');
-        await page.click('[data-test="toggleContentButton"]');
-    } catch {
-        console.log('Failed on page: ' + url);
-    }
-}
-
-// Fixes zip code and refreshes page
-async function typeNewZipCode(page, zipCode) {
-    await page.waitForSelector('[data-test="storeSearchLink"]');
-    await page.click('[data-test="storeSearchLink"]');
-    // Focus on zip code input
-    await page.waitForSelector('input[id="storeSearch"]');
-    await page.focus('input[id="storeSearch"]');
-    for (let i = 0; i < 5; i++) {
-        await page.keyboard.press('Backspace');
-    }
-    // Type zipcode, hit enter
-    await page.keyboard.type(zipCode);
+async function checkZipCode(page, desiredZip) {
+    //try {
+    await page.waitForSelector('[data-test="storeId-store-name"]');
+    // Click on edit store button
+    await page.click('[data-test="storeId-store-name"]');
+    // Type new zip code
+    await page.waitForSelector('#zipOrCityState');
+    // Delay for transition
+    await page.waitFor(300);
+    await page.focus('#zipOrCityState');
+    await page.keyboard.type(desiredZip);
     await page.keyboard.type('\n');
-    await page.waitFor(1000);
-    // Go to first store, expand to show deatils
-    await page.waitForSelector('[class="Button-bwu3xu-0 hHzxma h-padding-a-none"]');
-    await page.click('[class="Button-bwu3xu-0 hHzxma h-padding-a-none"]');
-    await page.waitForSelector('[data-test="chooseStoreModal-storeDetails-storeInformationSetAsMyStoreButton"]');
-    // Set as store
+
+    // TODO make this wait more robust/faster
+    await page.waitFor(300);
+    //await waitForNetworkIdle({ page: page });
+    //await page.waitForNavigation({ waitUntil: 'domcontentloaded'});
+    await page.waitForSelector('[data-test="storeLocationSearch-button"]', { visible: true });
+
+    await page.focus('[data-test="storeLocationSearch-button"]');
     await page.keyboard.press("Tab");
+    // Confirm new store selection
     await page.keyboard.type('\n');
-    await page.waitForSelector('[data-test="storeSearchLink"]');
-    await page.keyboard.press("Escape");
+    try {
+        // Wait for products to enter loading state
+        await page.waitForSelector('[class="Col-favj32-0 sc-AykKG eBGbtJ"]', { timeout: 5000 });
+        // Wait for products to return to loaded state
+        await page.waitForSelector('[class="Col-favj32-0 sc-AykKG bhTTIq"]', { timeout: 5000 });
+        //await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 });
+    } catch{ }
 }
 
 // Constructs the genericRetailerObj
-function getGenericObj(html, rank) {
-    const $ = cheerio.load(html);
+function getGenericObj(productName, productPrice, rank) {
     var targetObj = new Object();
     targetObj.retailer = 'Target';
-    targetObj.productName = $('[data-test="product-title"]').text();
-    targetObj.price = parseFloat(($('[data-test="product-price"]').text()).substring(1));
+    targetObj.productName = productName;
+    targetObj.price = parseFloat((productPrice).substring(1));
     targetObj.unitPrice = null;
-    targetObj.inStock = ($('[data-test="storeMessage"]').text()).substr(0, 8) == 'In stock';
+    targetObj.inStock = true;//;($('[data-test="storeMessage"]').text()).substr(0, 8) == 'In stock';
     targetObj.unit = null;
     targetObj.img = null;
     targetObj.zipCode = thisZip;
@@ -112,3 +86,20 @@ function getGenericObj(html, rank) {
 }
 
 module.exports = { getData };
+
+async function test(query) {
+    try {
+        var res = await getData(query, '75028');
+        console.log(res[0]);
+    } catch (error) {
+        console.log(error);
+    }
+    try {
+        var res2 = await getData(query, '10001');
+        console.log(res2[0]);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//test('bananas');
