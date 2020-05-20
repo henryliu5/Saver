@@ -121,4 +121,4 @@ function getGenericObj (html, rank) {
     return walmartObj;
 }
 
-getData('apples', '73301');
+//getData('apples', '73301');
