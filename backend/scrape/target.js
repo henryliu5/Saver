@@ -8,7 +8,7 @@ async function getData(query, desiredZip) {
     const result = [];
     thisZip = desiredZip;
     // Opens puppeteer browser
-    const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
+    const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
     await page.setViewport({ width: 1920, height: 1080 });
@@ -39,7 +39,7 @@ async function getData(query, desiredZip) {
     for (var i = 0; i < productTitles.length; i++) {
         result.push(getGenericObj(productTitles[i], productPrices[i], i, productStock[i]));
     }
-    //await browser.close();
+    await browser.close();
     return result;
 };
 
