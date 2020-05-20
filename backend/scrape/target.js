@@ -8,7 +8,7 @@ async function getData(query, desiredZip) {
     const result = [];
     thisZip = desiredZip;
     // Opens puppeteer browser
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
+    const browser = await puppeteer.launch({ headless: false, defaultViewport: null });
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
     await page.setViewport({ width: 1920, height: 1080 });
@@ -20,8 +20,10 @@ async function getData(query, desiredZip) {
     // Select all elements that match the product-title selctor NOTE: Will be first six bc of viewport, others will not have loaded
     await page.waitForSelector('[data-test=product-title]');
     await page.waitForSelector('[data-test="product-price"]');
+    await page.waitForSelector('[data-test="LPFulfillmentSection_wrapper"]');
     var productTitles = [];
     var productPrices = [];
+    var productStock = [];
     let html = await page.content();
     const $ = cheerio.load(html);
     $('[data-test=product-title]').each(function (i) {
@@ -30,11 +32,14 @@ async function getData(query, desiredZip) {
     $('[data-test="product-price"]').each(function (i) {
         productPrices[i] = $(this).text();
     });
+    $('[data-test="LPFulfillmentSection_wrapper"]').each(function (i) {
+        productStock[i] = $(this).text();
+    });
     // Get URLs from all elements
     for (var i = 0; i < productTitles.length; i++) {
-        result.push(getGenericObj(productTitles[i], productPrices[i], i));
+        result.push(getGenericObj(productTitles[i], productPrices[i], i, productStock[i]));
     }
-    await browser.close();
+    //await browser.close();
     return result;
 };
 
@@ -71,13 +76,15 @@ async function checkZipCode(page, desiredZip) {
 }
 
 // Constructs the genericRetailerObj
-function getGenericObj(productName, productPrice, rank) {
+function getGenericObj(productName, productPrice, rank, inStock) {
     var targetObj = new Object();
     targetObj.retailer = 'Target';
     targetObj.productName = productName;
     targetObj.price = parseFloat((productPrice).substring(1));
     targetObj.unitPrice = null;
-    targetObj.inStock = true;//;($('[data-test="storeMessage"]').text()).substr(0, 8) == 'In stock';
+    console.log(rank);
+    console.log(inStock);
+    targetObj.inStock = !inStock.includes('Not at');//;($('[data-test="storeMessage"]').text()).substr(0, 8) == 'In stock';
     targetObj.unit = null;
     targetObj.img = null;
     targetObj.zipCode = thisZip;
