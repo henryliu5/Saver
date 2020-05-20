@@ -12,6 +12,8 @@ app.get('/data', (req, res, next) => {
         console.log(query.zip);
         res.status(200).send('ok');
     } else{
+        console.log(query.productName);
+        console.log(query.zip);
         res.status(400).send(`Missing parameters, received productName=${query.productName}, zip=${query.zip}`);
     }
 })
