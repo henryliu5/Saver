@@ -106,9 +106,11 @@ function getGenericObj(krogerObj, rank) {
         genericObj.unit = krogerObj.items[0].size;
         genericObj.img = null;
         genericObj.zipCode = thisZip;
+        genericObj.timeStamp = Date.now();
         genericObj.rank = rank;
     } catch (error) {
         genericObj.error = error;
+        genericObj.timeStamp = Date.now();
         genericObj.originalObj = krogerObj;
     }
     return genericObj;

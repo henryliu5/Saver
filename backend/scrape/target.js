@@ -86,6 +86,7 @@ function getGenericObj(productName, productPrice, rank, inStock) {
     targetObj.unit = null;
     targetObj.img = null;
     targetObj.zipCode = thisZip;
+    targetObj.timeStamp = Date.now();
     targetObj.rank = rank;
     return targetObj;
 }
