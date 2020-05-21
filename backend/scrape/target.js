@@ -8,12 +8,12 @@ async function getData(query, desiredZip) {
     const result = [];
     thisZip = desiredZip;
     // Opens puppeteer browser
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null });
+    const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox'] });
     const page = await browser.newPage();
     await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
     await page.setViewport({ width: 1920, height: 1080 });
     // Navigate to search page and wait until it loads properly
-    await page.goto(url + query, { waitUntil: 'networkidle2'});
+    await page.goto(url + query, { waitUntil: 'networkidle2' });
 
     await checkZipCode(page, desiredZip);
 
