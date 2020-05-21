@@ -117,6 +117,7 @@ function getGenericObj (html, rank) {
     walmartObj.inStock = $('div[class="prod-ProductOffer-oosMsg prod-PaddingTop--xxs"] > span').text() == 'Out of stock' ? false : true;
     walmartObj.img = null;
     walmartObj.zipCode = $('span[class="j_a zipCode j_b"]').text();
+    walmartObj.timeStamp = Date.now();
     walmartObj.rank = rank;
     return walmartObj;
 }
