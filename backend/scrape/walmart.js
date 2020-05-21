@@ -34,7 +34,7 @@ async function getData (query, reqZip) {
         productUrls.push('https://www.walmart.com' + productUrl);
     }
     //iterate through product URLs and asynchronously get generic object for each product page
-    for(let i = 0; i < productUrls.length; i++) {
+    for(let i = 0; i < 10; i++) {
         try {
             let productBrowser = await puppeteer.launch({headless: true, defaultViewport: null});
             result.push(getItem(productBrowser, productUrls[i], i, reqZip));
@@ -121,4 +121,4 @@ function getGenericObj (html, rank) {
     return walmartObj;
 }
 
-//getData('apples', '73301');
+module.exports = { getData };
