@@ -82,12 +82,11 @@ function getGenericObj(productName, productPrice, rank, inStock) {
     targetObj.productName = productName;
     targetObj.price = parseFloat((productPrice).substring(1));
     targetObj.unitPrice = null;
-    console.log(rank);
-    console.log(inStock);
     targetObj.inStock = !inStock.includes('Not at');//;($('[data-test="storeMessage"]').text()).substr(0, 8) == 'In stock';
     targetObj.unit = null;
     targetObj.img = null;
     targetObj.zipCode = thisZip;
+    targetObj.timeStamp = Date.now();
     targetObj.rank = rank;
     return targetObj;
 }
