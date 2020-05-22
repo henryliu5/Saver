@@ -39,6 +39,7 @@ async function getData(query, desiredZip) {
     for (var i = 0; i < productTitles.length; i++) {
         result.push(getGenericObj(productTitles[i], productPrices[i], i, productStock[i]));
     }
+    await page.close();
     await browser.close();
     return result;
 };

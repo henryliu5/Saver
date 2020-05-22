@@ -44,6 +44,7 @@ async function getData(query, reqZip) {
     }
     result = await Promise.all(result);
     console.log(result);
+    await page.close();
     await browser.close();
     return result;
 }
@@ -66,6 +67,7 @@ async function getItem(page, curUrl, rank, reqZip) {
     await checkZipCode(page, reqZip);
     //get html for generic product object
     const html = await page.content();
+    await page.close();
     return getGenericObj(html, rank);
 }
 
