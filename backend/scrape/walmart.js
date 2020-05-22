@@ -110,7 +110,7 @@ function getGenericObj(html, rank) {
     walmartObj.retailer = 'Walmart';
     walmartObj.productName = $('[class="prod-ProductTitle font-normal"]').attr('content');
     walmartObj.price = parseFloat($('span[class="price display-inline-block arrange-fit price price--stylized"] > span[class="visuallyhidden"]').text().substring(1));
-    unitPriceObj = $('div[class="display-inline-block-xs valign-bottom prod-PaddingBottom--xxs"] > div').text();
+    unitPriceObj = $('[class="prod-ProductOffer-ppu prod-ProductOffer-ppu-enhanced display-inline-block-xs prod-PaddingRight--s copy-small font-normal prod-PaddingLeft--xs prod-PaddingTop--xxs"]').text();
     walmartObj.unitPrice = parseFloat(unitPriceObj.substring(1, 5));
     walmartObj.unit = unitPriceObj.substring(8);
     walmartObj.inStock = $('div[class="prod-ProductOffer-oosMsg prod-PaddingTop--xxs"] > span').text() == 'Out of stock' ? false : true;
