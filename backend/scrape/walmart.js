@@ -14,14 +14,14 @@ async function getData(query, reqZip) {
     //set page options (viewport, useragent, and requestInterception)
     await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.0 Safari/537.36');
     await page.setViewport({ width: 1440, height: 900 });
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if (req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image') {
-            req.abort();
-        } else {
-            req.continue();
-        }
-    });
+    // await page.setRequestInterception(true);
+    // page.on('request', (req) => {
+    //     if (req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image') {
+    //         req.abort();
+    //     } else {
+    //         req.continue();
+    //     }
+    // });
     //navigate to search page and wait for results to load
     await page.goto(url + query);
     await page.waitForSelector('[class="product-title-link line-clamp line-clamp-2 truncate-title"]');
@@ -43,7 +43,6 @@ async function getData(query, reqZip) {
         }
     }
     result = await Promise.all(result);
-    console.log(result);
     await browser.close();
     return result;
 }
@@ -54,14 +53,14 @@ async function getItem(browser, curUrl, rank, reqZip) {
     await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.0 Safari/537.36');
     await page.setViewport({ width: 1920, height: 1080 });
     //ignore styling and images to improve performance
-    await page.setRequestInterception(true);
-    page.on('request', (req) => {
-        if (req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image') {
-            req.abort();
-        } else {
-            req.continue();
-        }
-    });
+    // await page.setRequestInterception(true);
+    // page.on('request', (req) => {
+    //     if (req.resourceType() == 'stylesheet' || req.resourceType() == 'font' || req.resourceType() == 'image') {
+    //         req.abort();
+    //     } else {
+    //         req.continue();
+    //     }
+    // });
     //go to product page and check zipcode
     await page.goto(curUrl);
     await checkZipCode(page, reqZip);
