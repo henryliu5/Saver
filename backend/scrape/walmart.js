@@ -36,7 +36,7 @@ async function getData(query, reqZip) {
     //iterate through product URLs and asynchronously get generic object for each product page
     for (let i = 0; i < 10; i++) {
         try {
-            let productBrowser = await puppeteer.launch({ headless: true, defaultViewport: null });
+            let productBrowser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
             result.push(getItem(productBrowser, productUrls[i], i, reqZip));
         } catch (e) {
             console.log("Failed to create page: \n" + e);
