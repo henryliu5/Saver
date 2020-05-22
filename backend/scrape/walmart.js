@@ -34,21 +34,21 @@ async function getData(query, reqZip) {
         productUrls.push('https://www.walmart.com' + productUrl);
     }
     //iterate through product URLs and asynchronously get generic object for each product page
-    for (let i = 0; i < 10; i++) {
+    //let productBrowser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
+    for (let i = 0; i < 9; i++) {
         try {
-            let productBrowser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
-            result.push(getItem(productBrowser, productUrls[i], i, reqZip));
+            result.push(getItem(await browser.newPage(), productUrls[i], i, reqZip));
         } catch (e) {
             console.log("Failed to create page: \n" + e);
         }
     }
     result = await Promise.all(result);
+    console.log(result);
     await browser.close();
     return result;
 }
 
-async function getItem(browser, curUrl, rank, reqZip) {
-    const page = await browser.newPage();
+async function getItem(page, curUrl, rank, reqZip) {
     //set page options (viewport, useragent, and requestInterception (ignore styling/images))
     await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.0 Safari/537.36');
     await page.setViewport({ width: 1920, height: 1080 });
@@ -66,7 +66,6 @@ async function getItem(browser, curUrl, rank, reqZip) {
     await checkZipCode(page, reqZip);
     //get html for generic product object
     const html = await page.content();
-    browser.close();
     return getGenericObj(html, rank);
 }
 
@@ -121,4 +120,5 @@ function getGenericObj(html, rank) {
     return walmartObj;
 }
 
+getData('apples', '73301');
 module.exports = { getData };
