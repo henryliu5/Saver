@@ -9,7 +9,7 @@ const url = 'https://www.walmart.com/search/?query=';
 async function getData(query, reqZip) {
     var result = [];
     //open puppeteer browser
-    const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox'] });
+    const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
     //set page options (viewport, useragent, and requestInterception)
     await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.0 Safari/537.36');
