@@ -3,6 +3,8 @@ const scrape = require('./scrape');
 const express = require('express');
 const app = express();
 require('dotenv').config();
+const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
+
 
 var port = process.env.PORT || 3000;
 
@@ -32,5 +34,15 @@ async function getClient() {
 }
 
 client = getClient();
+
+async function test(client) {
+    var instances = [];
+    for(query of testPhrases){
+        instances.push(scrape.addQuery(client, query, '75028'));
+    }
+    await Promise.all(instances);
+}
+
+test(client);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
