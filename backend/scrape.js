@@ -3,7 +3,7 @@ const parseCsv = require('./parse');
 const kroger = require('./scrape/kroger');
 const target = require('./scrape/target');
 const walmart = require('./scrape/walmart');
-const retailers = [kroger, target, walmart;
+const retailers = [kroger, target, walmart];
 
 // 5/15/20
 // 2m 30s 75028
