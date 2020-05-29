@@ -22,10 +22,30 @@ async function getData (query, reqZip) {
     for (res of searchResults) {
         productUrls.push('https://www.walmart.com' + res.getAttribute('href'));
     }
-    console.log(productUrls);
-    
+    console.log(productUrls[0]);
+}
+async function test(){
+    var result1 = [];
+    for (var i = 0; i < 10; i++) {
+        result1.push(getData('bananas'));
+    }
+    await Promise.all(result1);
+    console.log('Finished batch 1');
+
+    var result2 = [];
+    for (var i = 0; i < 20; i++) {
+        result2.push(getData('apples'));
+    }
+    await Promise.all(result2);
+    console.log('Finished batch 2');
+
+    var result3 = [];
+    for (var i = 0; i < 30; i++) {
+        result3.push(getData('apples'));
+    }
+    await Promise.all(result3);
+    console.log('Finished batch 3');
 }
 
-getData('bananas', '4234');
 
 module.exports = { getData };
