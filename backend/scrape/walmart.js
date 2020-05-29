@@ -47,5 +47,6 @@ async function test(){
     console.log('Finished batch 3');
 }
 
+test();
 
 module.exports = { getData };
