@@ -29,7 +29,7 @@ async function getClient() {
     const uri = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASS}@saver-cluster-d2gru.mongodb.net/test?retryWrites=true&w=majority`;
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     await client.connect();
-    console.log('mongoDB Connected')
+    console.log('mongoDB Connected');
     return client;
 }
 
