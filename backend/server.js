@@ -43,6 +43,6 @@ async function test(client) {
     await Promise.all(instances);
 }
 
-test(client);
+//test(client);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))

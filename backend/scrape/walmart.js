@@ -122,5 +122,4 @@ function getGenericObj(html, rank) {
     return walmartObj;
 }
 
-getData('apples', '73301');
 module.exports = { getData };
