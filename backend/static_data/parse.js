@@ -7,7 +7,7 @@ async function parseCsv(client) {
 
     // Create promises to control file streams
     let countyPromise = new Promise((resolve, reject) => {
-        fs.createReadStream('./static_data/countycensus.csv')
+        fs.createReadStream('./countycensus.csv')
             .pipe(csv(['County', 'Population']))
             .on('data', (data) => counties.push(data))
             .on('end', () => {
@@ -16,7 +16,7 @@ async function parseCsv(client) {
     });
 
     let zipPromise = new Promise((resolve, reject) => {
-        fs.createReadStream('./static_data/uszips.csv')
+        fs.createReadStream('./uszips.csv')
             .pipe(csv(['Zip', 'State', 'County']))
             .on('data', (data) => zips.push(data))
             .on('end', () => {
