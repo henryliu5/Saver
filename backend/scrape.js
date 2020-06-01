@@ -1,9 +1,9 @@
 const { MongoClient } = require('mongodb');
-const parseCsv = require('./parse');
 const kroger = require('./scrape/kroger');
 const target = require('./scrape/target');
 const walmart = require('./scrape/walmart');
 const retailers = [kroger, target, walmart];
+
 
 // 5/15/20
 // 2m 30s 75028
@@ -17,8 +17,6 @@ const retailers = [kroger, target, walmart];
 // 5/17/20 w/ parallelization of queries
 // 0m 36s 75028
 // 0m 29s 10001
-
-const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
 
 async function addQuery(client, query, zip) {
     client = await client;
@@ -34,8 +32,7 @@ async function addQuery(client, query, zip) {
     for (retailerObjs of resolvedArray) {
         result.push(retailerObjs);
     }
-    result = [].concat(result[0], result[1], result[2]);
-    console.log(result);
+    result = result.flat();
     for (product of result) {
         await client.db('product_info').collection(countyObj.countyInfo).updateOne({ retailer: product.retailer, productName: product.productName }, { $set: product }, { upsert: true });
     }
@@ -46,14 +43,14 @@ async function getLocationCookies(client) {
     client = await client;
     let count = 0;
     let cursor = await client.db('county-zip').collection('county-zip').find({});
-    let zips =  await cursor.toArray();
+    let zips = await cursor.toArray();
     let result = [];
     let failedResolves = [];
     let zipSet = new Set();
     let time = Date.now();
-    for(doc of zips) {
+    for (doc of zips) {
         try {
-            if(doc.zip == doc.walmartCookie.substring(0, 5)) {
+            if (doc.zip == doc.walmartCookie.substring(0, 5)) {
                 count++;
             } else {
                 zipSet.add(doc.zip);
@@ -63,20 +60,20 @@ async function getLocationCookies(client) {
         }
     }
     count = 0;
-    for(zip of zipSet) {
+    for (zip of zipSet) {
         result.push(walmart.getCookie(zip.trim()));
-        if(result.length == 10) {
+        if (result.length == 10) {
             try {
                 //console.log(`Resolving Promises ${count}: ${(Date.now() - time)/1000.0}`);
                 result = await Promise.all(result);
                 for (cookie of result) {
                     //console.log(`Cookie from result: ${cookie.toString().substring(0, 5)}: ${cookie.toString()}`);
-                    await client.db('county-zip').collection('county-zip').updateOne({zip: cookie.toString().substring(0, 5)}, {$set: {'walmartCookie': cookie.toString()}});
+                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookie.toString().substring(0, 5) }, { $set: { 'walmartCookie': cookie.toString() } });
                 }
                 //console.log(`Promise resolved and cookies updated in mongo ${count}: ${(Date.now() - time)/1000.0}`);
                 time = Date.now();
             } catch {
-                console.log(`Failed resolve from ${count*40} to ${count*40 + 40}`);
+                console.log(`Failed resolve from ${count * 40} to ${count * 40 + 40}`);
                 failedResolves.push(count);
             }
             result = [];
