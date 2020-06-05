@@ -2,8 +2,8 @@ const { MongoClient } = require('mongodb');
 const kroger = require('./scrape/kroger');
 const target = require('./scrape/target');
 const walmart = require('./scrape/walmart');
+const cookie = require('./scrape/cookie');
 const retailers = [kroger, target, walmart];
-
 
 // 5/15/20
 // 2m 30s 75028
@@ -44,13 +44,11 @@ async function getLocationCookies(client) {
     let count = 0;
     let cursor = await client.db('county-zip').collection('county-zip').find({});
     let zips = await cursor.toArray();
-    let result = [];
-    let failedResolves = [];
     let zipSet = new Set();
     let time = Date.now();
     for (doc of zips) {
         try {
-            if (doc.zip == doc.walmartCookie.substring(0, 5)) {
+            if (doc.zip == doc.walmartCookie.substring(0, 5) && doc.targetCookie !== null) {
                 count++;
             } else {
                 zipSet.add(doc.zip);
@@ -60,23 +58,28 @@ async function getLocationCookies(client) {
         }
     }
     count = 0;
+    let batch = [];
     for (zip of zipSet) {
-        result.push(walmart.getCookie(zip.trim()));
-        if (result.length == 10) {
+        zip = zip.trim();
+        batch.push([zip, cookie.getWalmartCookie(zip), cookie.getTargetCookie(zip)]);
+        if (batch.length == 10) {
             try {
                 //console.log(`Resolving Promises ${count}: ${(Date.now() - time)/1000.0}`);
-                result = await Promise.all(result);
-                for (cookie of result) {
-                    //console.log(`Cookie from result: ${cookie.toString().substring(0, 5)}: ${cookie.toString()}`);
-                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookie.toString().substring(0, 5) }, { $set: { 'walmartCookie': cookie.toString() } });
+                // For each zip code, unwrap all promises for each retailer
+                batch = await Promise.all(batch.map(zipCookies => Promise.all(zipCookies)));
+                console.log(batch);
+                for (cookies of batch) {
+                    //console.log(`Cookie from result: ${cookies.toString().substring(0, 5)}: ${cookies.toString()}`);
+                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0] }, { $set: { 'walmartCookie': cookies[0].toString() } });
+                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0] }, { $set: { 'targetCookie': cookies[1].toString() } });
                 }
                 //console.log(`Promise resolved and cookies updated in mongo ${count}: ${(Date.now() - time)/1000.0}`);
                 time = Date.now();
-            } catch {
-                console.log(`Failed resolve from ${count * 40} to ${count * 40 + 40}`);
-                failedResolves.push(count);
+            } catch (err) {
+                console.log(err);
+                console.log(`Failed resolve from ${count * 10} to ${count * 10 + 10}`);
             }
-            result = [];
+            batch = [];
             count++;
         }
     }

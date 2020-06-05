@@ -36,12 +36,12 @@ async function getClient() {
 client = getClient();
 
 async function test(client) {
-    var instances = [];
-    for(query of testPhrases){
-        instances.push(scrape.addQuery(client, query, '01012'));
-    }
-    await Promise.all(instances);
-    //await scrape.getLocationCookies(client);
+//     var instances = [];
+//     for(query of testPhrases){
+//         instances.push(scrape.addQuery(client, query, '01012'));
+//     }
+//     await Promise.all(instances);
+    await scrape.getLocationCookies(client);
 }
 
 test(client);

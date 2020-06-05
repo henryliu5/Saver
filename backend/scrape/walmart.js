@@ -65,38 +65,6 @@ function genericRetailerObj(html, rank, reqZip) {
     return walmartObj;
 }
 
-async function checkZipCode(page, reqZip) {
-    //navigate to walmart drawer
-    await page.waitForSelector('div[class="p_a p_ao p_v p_af ap_b"] > button[class="g_a ap_c g_c"]');
-    await page.click('button[class="g_a ap_c g_c"]');
-    await page.waitForSelector('[class="j_a zipCode j_b"]');
 
-    //check if zip needs to be updated
-    var zipCodeElem = await page.$('span[class="j_a zipCode j_b"]');
-    let curZipCode = await page.evaluate(el => el.textContent, zipCodeElem);
-    if (curZipCode != reqZip) {
-        await updateZipCode(page, reqZip);
-    }
-}
-
-async function updateZipCode(page, reqZip) {
-    //Navigate to zipcode dropdown, wait 200 ms for button to be visible
-    await page.waitForSelector('button[id="vh-location-button"]');
-    await page.waitFor(200);
-    await page.click('button[id="vh-location-button"]');
-
-    //type in requested Zip
-    const zipCodeField = await page.waitForSelector('input[class="i_a ar_c i_c"]');
-    for (let i = 0; i < 5; i++) {
-        await zipCodeField.press('Backspace');
-    }
-    await zipCodeField.type(reqZip);
-    await page.waitFor(200);
-
-    //click submit and wait for page to reload for new zipCode
-    await page.waitForSelector('div[class="p_a p_c b_a b_q"] > button[id="zipcode-form-submit-button"]');
-    await page.click('div[class="p_a p_c b_a b_q"] > button[id="zipcode-form-submit-button"]');
-    await page.reload();
-}
 
 module.exports = { getData };
