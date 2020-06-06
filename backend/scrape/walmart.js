@@ -4,9 +4,9 @@ const url = 'https://www.walmart.com/search/?query=';
 
 async function getData(client, query, reqZip) {
     //Get location cookie from mongodb for reqZip
-    // client = await client;
-    // const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
-    // const locationData = countyObj.walmartCookie;
+    client = await client;
+    const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
+    const locationData = countyObj.walmartCookie;
     let result = [];
     const response = await fetch(url + query);
     const $ = cheerio.load(await response.text());
@@ -48,5 +48,4 @@ function genericRetailerObj(html, reqZip, rank) {
     return walmartObj;
 }
 
-getData(null, 'apples', null);
 module.exports = { getData };
