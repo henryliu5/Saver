@@ -4,23 +4,28 @@ const puppeteer = require('puppeteer');
 var thisZip;
 
 // Navigates to search at Target for specified query
-async function getData(query, desiredZip) {
+async function getData(client, query, reqZip) {
+    thisZip = reqZip;
+    client = await client;
+    const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
+    const locationData = countyObj.targetCookie;
     const result = [];
-    thisZip = desiredZip;
-    // Opens puppeteer browser
+
+    var time = Date.now();
+    // Open puppeteer browser
     const browser = await puppeteer.launch({ headless: true, defaultViewport: null, args: ['--no-sandbox', '--disable-setuid-sandbox'] });
     const page = await browser.newPage();
-    await page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
+    
     await page.setViewport({ width: 1920, height: 1080 });
-    // Navigate to search page and wait until it loads properly
-    await page.goto(url + query, { waitUntil: 'networkidle2' });
 
-    await checkZipCode(page, desiredZip);
+    // Set location cookie and navigate
+    await page.setCookie({ name: "fiatsCookie", value: locationData, domain:".target.com"})
+    await page.goto(url + query, { waitUntil: 'networkidle2' });
 
     // Select all elements that match the product-title selctor NOTE: Will be first six bc of viewport, others will not have loaded
     await page.waitForSelector('[data-test=product-title]');
-    await page.waitForSelector('[data-test="product-price"]');
-    await page.waitForSelector('[data-test="LPFulfillmentSection_wrapper"]');
+    // await page.waitForSelector('[data-test="product-price"]');
+    // await page.waitForSelector('[data-test="LPFulfillmentSection_wrapper"]');
     var productTitles = [];
     var productPrices = [];
     var productStock = [];
@@ -44,38 +49,6 @@ async function getData(query, desiredZip) {
     return result;
 };
 
-async function checkZipCode(page, desiredZip) {
-    //try {
-    await page.waitForSelector('[data-test="storeId-store-name"]');
-    // Click on edit store button
-    await page.click('[data-test="storeId-store-name"]');
-    // Type new zip code
-    await page.waitForSelector('#zipOrCityState');
-    // Delay for transition
-    await page.waitFor(300);
-    await page.focus('#zipOrCityState');
-    await page.keyboard.type(desiredZip);
-    await page.keyboard.type('\n');
-
-    // TODO make this wait more robust/faster
-    await page.waitFor(300);
-    //await waitForNetworkIdle({ page: page });
-    //await page.waitForNavigation({ waitUntil: 'domcontentloaded'});
-    await page.waitForSelector('[data-test="storeLocationSearch-button"]', { visible: true });
-
-    await page.focus('[data-test="storeLocationSearch-button"]');
-    await page.keyboard.press("Tab");
-    // Confirm new store selection
-    await page.keyboard.type('\n');
-    try {
-        // Wait for products to enter loading state
-        await page.waitForSelector('[class="Col-favj32-0 sc-AykKG eBGbtJ"]', { timeout: 5000 });
-        // Wait for products to return to loaded state
-        await page.waitForSelector('[class="Col-favj32-0 sc-AykKG bhTTIq"]', { timeout: 5000 });
-        //await page.waitForNavigation({ waitUntil: 'domcontentloaded', timeout: 30000 });
-    } catch{ }
-}
-
 // Constructs the genericRetailerObj
 function getGenericObj(productName, productPrice, rank, inStock) {
     var targetObj = new Object();
@@ -95,18 +68,18 @@ function getGenericObj(productName, productPrice, rank, inStock) {
 module.exports = { getData };
 
 async function test(query) {
-    try {
-        var res = await getData(query, '75028');
-        console.log(res[0]);
-    } catch (error) {
-        console.log(error);
-    }
-    try {
-        var res2 = await getData(query, '10001');
-        console.log(res2[0]);
-    } catch (error) {
-        console.log(error);
-    }
+    // try {
+    //     var res = await getData(query, '75028');
+    //     console.log(res[0]);
+    // } catch (error) {
+    //     console.log(error);
+    // }
+    // try {
+    //     var res2 = await getData(query, '10001');
+    //     console.log(res2[0]);
+    // } catch (error) {
+    //     console.log(error);
+    // }
 }
 
 //test('bananas');

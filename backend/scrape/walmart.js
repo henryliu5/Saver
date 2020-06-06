@@ -1,54 +1,37 @@
-const { MongoClient } = require('mongodb');
 const cheerio = require('cheerio');
-const puppeteer = require('puppeteer');
-const Browser = require('zombie');
-Browser.waitDuration = '30s';
+const fetch = require('node-fetch');
 const url = 'https://www.walmart.com/search/?query=';
-process.setMaxListeners(Infinity);
 
 async function getData(client, query, reqZip) {
-    client = await client;
-    const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
-    const locationData = countyObj.walmartCookie;
+    //Get location cookie from mongodb for reqZip
+    // client = await client;
+    // const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
+    // const locationData = countyObj.walmartCookie;
     let result = [];
-    const zombieBrowser = new Browser({
-        runScripts: false,
-        loadCSS: false,
-        silent: true
-    });
-    await zombieBrowser.visit(url + query);
-    const searchResults = zombieBrowser.queryAll('[class="product-title-link line-clamp line-clamp-2 truncate-title"]');
-    const productUrls = [];
-    for (res of searchResults) {
-        productUrls.push('https://www.walmart.com' + res.getAttribute('href'));
-    }
+    const response = await fetch(url + query);
+    const $ = cheerio.load(await response.text());
+    const productUrls = JSON.parse($('#searchContent').html()).searchContent.preso.items.map(item => ('https://www.walmart.com/' + item.productPageUrl));
     for (let i = 0; i < productUrls.length; i++) {
-        let prodBrowser = new Browser({
-            runScripts: false,
-            loadCSS: false,
-            silent: true,
-        });
-        try {
-            result.push(getItem(prodBrowser, productUrls[i], i, locationData));
-        } catch {
-            console.log(`Failed on ${i}`);
-        }
-
+        result.push(getItem(productUrls[i], '01012%3AChesterfield%3AMA%3A%3A8%3A1|28l%2C22j%2C1pw%2C42m%2C1oe%2C1in%2C1j4%2C1ua%2C1sp%2C1re||7|1|1yis%3B16%3B5%2C1xje%3B16%3B11%2C1y4s%3B16%3B12', i));
     }
     result = await Promise.all(result);
-    zombieBrowser.destroy();
+    console.log(result);
     process.exit();
 }
 
-async function getItem(browser, url, rank, cookie) {
-    browser.setCookie({ name: 'location-data', domain: '.walmart.com', value: cookie });
-    await browser.visit(url);
-    const html = browser.html();
-    browser.destroy();
-    return genericRetailerObj(html, rank, cookie.substring(0, 5));
+async function getItem(url, cookie, rank) {
+    const response = await fetch(url, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+            'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.0 Safari/537.36',
+            cookie: `location-data=${cookie}`
+        }
+    });
+    return genericRetailerObj(await response.text(), cookie.substring(0, 5), rank);
 }
 
-function genericRetailerObj(html, rank, reqZip) {
+function genericRetailerObj(html, reqZip, rank) {
     const $ = cheerio.load(html);
     var walmartObj = new Object();
     walmartObj.retailer = 'Walmart';
@@ -57,7 +40,7 @@ function genericRetailerObj(html, rank, reqZip) {
     unitPriceObj = $('[class="prod-ProductOffer-ppu prod-ProductOffer-ppu-enhanced display-inline-block-xs prod-PaddingRight--s copy-small font-normal prod-PaddingLeft--xs prod-PaddingTop--xxs"]').text();
     walmartObj.unitPrice = parseFloat(unitPriceObj.substring(1, 5));
     walmartObj.unit = unitPriceObj.substring(8);
-    walmartObj.inStock = $('div[class="prod-ProductOffer-oosMsg prod-PaddingTop--xxs"] > span').text() == 'Out of stock' ? false : true;
+    walmartObj.inStock = isNaN(walmartObj.price) ? false : true;
     walmartObj.img = null;
     walmartObj.zipCode = reqZip;
     walmartObj.timeStamp = Date.now();
@@ -65,6 +48,5 @@ function genericRetailerObj(html, rank, reqZip) {
     return walmartObj;
 }
 
-
-
+getData(null, 'apples', null);
 module.exports = { getData };

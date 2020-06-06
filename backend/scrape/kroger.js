@@ -66,7 +66,7 @@ async function getLocations(zipCode) {
 // Get product information for given query and zip - zip used to determine location Id of store
 // TODO enable fetching of product information from multiple stores to get best prices
 // TODO fix case where there are no valid products
-async function getData(query, zipCode) {
+async function getData(client, query, zipCode) {
     thisZip = zipCode;
     let genericObjArr = [];
     // Get necessary info for api request

@@ -1,5 +1,4 @@
 const puppeteer = require ('puppeteer');
-process.setMaxListeners(Infinity);
 
 async function getWalmartCookie(zip) {
     const url = 'https://www.walmart.com/ip/Bananas-each/44390948';
