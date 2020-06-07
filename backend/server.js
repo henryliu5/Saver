@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 require('dotenv').config();
 const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
-
+process.setMaxListeners(Infinity);
 
 var port = process.env.PORT || 3000;
 
@@ -41,7 +41,10 @@ async function test(client) {
 //         instances.push(scrape.addQuery(client, query, '01012'));
 //     }
 //     await Promise.all(instances);
-    await scrape.getLocationCookies(client);
+    //await scrape.getLocationCookies(client);
+    var res = await scrape.addQuery(client, 'bananas', '01012')
+    console.log(res)
+    process.exit()
 }
 
 test(client);

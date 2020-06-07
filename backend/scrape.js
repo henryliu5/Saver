@@ -48,7 +48,7 @@ async function getLocationCookies(client) {
     let time = Date.now();
     for (doc of zips) {
         try {
-            if (doc.zip == doc.walmartCookie.substring(0, 5) && doc.targetCookie !== null) {
+            if (doc.zip == doc.walmartCookie.substring(0, 5) && doc.targetCookie != null) {
                 count++;
             } else {
                 zipSet.add(doc.zip);
@@ -70,8 +70,8 @@ async function getLocationCookies(client) {
                 console.log(batch);
                 for (cookies of batch) {
                     //console.log(`Cookie from result: ${cookies.toString().substring(0, 5)}: ${cookies.toString()}`);
-                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0] }, { $set: { 'walmartCookie': cookies[0].toString() } });
-                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0] }, { $set: { 'targetCookie': cookies[1].toString() } });
+                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0].toString() }, { $set: { 'walmartCookie': cookies[1].toString() } });
+                    await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0].toString() }, { $set: { 'targetCookie': cookies[2].toString() } });
                 }
                 //console.log(`Promise resolved and cookies updated in mongo ${count}: ${(Date.now() - time)/1000.0}`);
                 time = Date.now();
