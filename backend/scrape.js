@@ -57,33 +57,33 @@ async function getLocationCookies(client) {
             zipSet.add(doc.zip);
         }
     }
+    //console.log(count);
     count = 0;
     let batch = [];
     for (zip of zipSet) {
         zip = zip.trim();
         batch.push([zip, cookie.getWalmartCookie(zip), cookie.getTargetCookie(zip)]);
-        if (batch.length == 10) {
+        //Get 10 zips' cookies at a time (avoid overloading memory)
+        if (batch.length == 10 || (zipSet.size < 10 && batch.length == zipSet.size)) {
             try {
-                //console.log(`Resolving Promises ${count}: ${(Date.now() - time)/1000.0}`);
+                //console.log(`Resolving Promises: ${count * 10} to ${count * 10 + batch.length}`);
                 // For each zip code, unwrap all promises for each retailer
                 batch = await Promise.all(batch.map(zipCookies => Promise.all(zipCookies)));
-                console.log(batch);
                 for (cookies of batch) {
                     //console.log(`Cookie from result: ${cookies.toString().substring(0, 5)}: ${cookies.toString()}`);
                     await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0].toString() }, { $set: { 'walmartCookie': cookies[1].toString() } });
                     await client.db('county-zip').collection('county-zip').updateOne({ zip: cookies[0].toString() }, { $set: { 'targetCookie': cookies[2].toString() } });
                 }
                 //console.log(`Promise resolved and cookies updated in mongo ${count}: ${(Date.now() - time)/1000.0}`);
-                time = Date.now();
             } catch (err) {
-                console.log(err);
                 console.log(`Failed resolve from ${count * 10} to ${count * 10 + 10}`);
+                console.log(err);
             }
             batch = [];
             count++;
+            time = Date.now();
         }
     }
-    process.exit();
 }
 
 module.exports = { addQuery, getLocationCookies };

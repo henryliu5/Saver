@@ -8,18 +8,20 @@ async function getData(client, query, reqZip) {
     const countyObj = await client.db('county-zip').collection('county-zip').findOne({ zip: reqZip.toString() });
     const locationData = countyObj.walmartCookie;
     let result = [];
+    //Get product urls from search results' html (roughly 40 products)
     const response = await fetch(url + query);
     const $ = cheerio.load(await response.text());
     const productUrls = JSON.parse($('#searchContent').html()).searchContent.preso.items.map(item => ('https://www.walmart.com/' + item.productPageUrl));
+    //Get genericRetailerObj for each product
     for (let i = 0; i < productUrls.length; i++) {
-        result.push(getItem(productUrls[i], '01012%3AChesterfield%3AMA%3A%3A8%3A1|28l%2C22j%2C1pw%2C42m%2C1oe%2C1in%2C1j4%2C1ua%2C1sp%2C1re||7|1|1yis%3B16%3B5%2C1xje%3B16%3B11%2C1y4s%3B16%3B12', i));
+        result.push(getItem(productUrls[i], locationData, i));
     }
     result = await Promise.all(result);
-    console.log(result);
     process.exit();
 }
 
 async function getItem(url, cookie, rank) {
+    //fetch product page's html with location cookie
     const response = await fetch(url, {
         method: 'GET',
         credentials: 'same-origin',
@@ -31,6 +33,7 @@ async function getItem(url, cookie, rank) {
     return genericRetailerObj(await response.text(), cookie.substring(0, 5), rank);
 }
 
+//Construct genericRetailerObj
 function genericRetailerObj(html, reqZip, rank) {
     const $ = cheerio.load(html);
     var walmartObj = new Object();

@@ -15,11 +15,11 @@ app.get('/data', async (req, res, next) => {
     var query = req.query;
     var productName = query.productName;
     var zip = query.zip;
-    if(productName && zip){
+    if(productName && zip) {
         console.log(`Received get on /data for ${productName} at ${zip}`);
         var products = await scrape.addQuery(client, productName, zip);
         res.status(200).send(products);
-    } else{
+    } else {
         res.status(400).send(`Missing parameters, received productName=${productName}, zip=${zip}`);
     }
 })
@@ -38,13 +38,11 @@ client = getClient();
 async function test(client) {
 //     var instances = [];
 //     for(query of testPhrases){
-//         instances.push(scrape.addQuery(client, query, '01012'));
+//         instances.push(scrape.addQuery(client, query, '75028'));
 //     }
-//     await Promise.all(instances);
-    //await scrape.getLocationCookies(client);
-    var res = await scrape.addQuery(client, 'bananas', '01012')
-    console.log(res)
-    process.exit()
+//     await Promise.all(instances);
+    await scrape.getLocationCookies(client); 
+    process.exit();
 }
 
 test(client);
