@@ -8,6 +8,8 @@
 
 .cart_content { 
     display: flex;
+    border: solid;
+    padding: 10px;
 }
 
 .cart_info {

@@ -2,49 +2,20 @@ import {List, Typography, Divider} from 'antd';
 import CartItem from '../CartItem/CartItem';
 import styles from './Cart.module.css';
 
-const data = [
-    {
-        "retailer": "Walmart",
-        "productName": "apple",
-        "rating": "5/5",
-        "price": "1.06/lb"
-    },
-    {
-        "retailer": "Target",
-        "productName": "apple",
-        "rating": "5/5",
-        "price": "1.06/lb"
-    },
-    {
-        "retailer": "Kroger",
-        "productName": "apple",
-        "rating": "5/5",
-        "price": "1.06/lb"
-    },
-    {
-        "retailer": "Walmart",
-        "productName": "banana",
-        "rating": "5/5",
-        "price": "1.06/lb"
-    },
-    {
-        "retailer": "Kroger",
-        "productName": "apple",
-        "rating": "5/5",
-        "price": "1.06/lb"
-    },
-];
 
-export default function Cart() {
+export default function Cart({data}) {
     return (
         <List 
-            header={<div>Cart</div>} 
-            footer={<div>End of Cart</div>} 
             bordered
             className = {styles.cart} 
-            dataSource={data} 
+            dataSource={data.keys()} 
             renderItem={product => (
-                <CartItem {...product}></CartItem>
+                <>
+                <Divider>{product}</Divider>
+                {data.get(product).map(i => {
+                    <CartItem {...i}></CartItem>
+                })}
+                </>
             )}
         />
     );
