@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"next dev\" \"node ../backend/server.js\"",
     "build": "next build",
     "start": "next start"
   },
   "dependencies": {
     "antd": "^4.4.2",
+    "concurrently": "^5.2.0",
     "next": "9.4.4",
     "react": "16.13.1",
     "react-dom": "16.13.1"

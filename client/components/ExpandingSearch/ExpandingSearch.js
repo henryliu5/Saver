@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AutoComplete } from "antd";
-import Item from "../Item/Item";
+import SearchItem from "../SearchItem/SearchItem";
 
 const { Option } = AutoComplete;
 
@@ -31,11 +31,12 @@ export default function Complete() {
         width: 1000,
       }}
       onSearch={handleSearch}
-      placeholder=""
+      placeholder="e.g. Apples"
       size="large"
+      autoFocus={true}
     >
       {result.map((email) => (
-        <Option key={email} value={email}></Option>
+        <Option key={email} value={<SearchItem productName='34343'></SearchItem>}></Option>
       ))}
     </AutoComplete>
   );

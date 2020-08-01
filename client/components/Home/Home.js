@@ -8,13 +8,11 @@ export default function Home() {
   return (
     <div>
       <h1 className={styles.title}>
-        Welcome to <a href="https://nextjs.org">Next.js!</a>
+        Type anything to start your search!
       </h1>
       <div className={styles.search}>
         <ExpandingSearch></ExpandingSearch>
       </div>
-      <Input size="large" placeholder="Apples" />
-      <Search placeholder="input search loading with enterButton" enterButton />
     </div>
   );
 }

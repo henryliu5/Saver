@@ -17,7 +17,7 @@ async function getData(client, query, reqZip) {
         result.push(getItem(productUrls[i], locationData, i));
     }
     result = await Promise.all(result);
-    process.exit();
+    return result;
 }
 
 async function getItem(url, cookie, rank) {
@@ -38,7 +38,7 @@ function genericRetailerObj(html, reqZip, rank) {
     const $ = cheerio.load(html);
     var walmartObj = new Object();
     walmartObj.retailer = 'Walmart';
-    walmartObj.productName = $('[class="prod-ProductTitle font-normal"]').attr('content');
+    walmartObj.productName = $('[class="prod-ProductTitle font-bold"]').attr('content');
     walmartObj.price = parseFloat($('span[class="price display-inline-block arrange-fit price price--stylized"] > span[class="visuallyhidden"]').text().substring(1));
     unitPriceObj = $('[class="prod-ProductOffer-ppu prod-ProductOffer-ppu-enhanced display-inline-block-xs prod-PaddingRight--s copy-small font-normal prod-PaddingLeft--xs prod-PaddingTop--xxs"]').text();
     walmartObj.unitPrice = parseFloat(unitPriceObj.substring(1, 5));

@@ -6,7 +6,7 @@ require('dotenv').config();
 const testPhrases = ['apples', 'banana', 'cookie', 'bread', 'eggs', 'milk', 'chips', 'soda', 'lettuce', 'juice'];
 process.setMaxListeners(Infinity);
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 7000;
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -35,16 +35,16 @@ async function getClient() {
 
 client = getClient();
 
-async function test(client) {
-//     var instances = [];
-//     for(query of testPhrases){
-//         instances.push(scrape.addQuery(client, query, '75028'));
-//     }
-//     await Promise.all(instances);
-    await scrape.getLocationCookies(client); 
-    process.exit();
-}
+// async function test(client) {
+// //     var instances = [];
+// //     for(query of testPhrases){
+// //         instances.push(scrape.addQuery(client, query, '75028'));
+// //     }
+// //     await Promise.all(instances);
+//     await scrape.getLocationCookies(client); 
+//     process.exit();
+// }
 
-test(client);
+// test(client);
 
 app.listen(port, () => console.log(`App listening at http://localhost:${port}`))
