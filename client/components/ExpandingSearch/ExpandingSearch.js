@@ -28,8 +28,9 @@ export default function Complete() {
     <AutoComplete
       style={{
         textAlign: "left",
-        width: 1000,
+        width: 1000
       }}
+      listHeight='1000'
       onSearch={handleSearch}
       placeholder="e.g. Apples"
       size="large"

@@ -4,7 +4,6 @@ import {Button} from 'antd';
 import {useState} from 'react';
 
 let temp = [
-    
     {
         "retailer": "Walmart",
         "productName": "apple",

@@ -2,7 +2,8 @@ import styles from './CartItem.module.css';
 import {Card} from "antd";
 
 
-export default function Item({retailer, productName, rating, price}) {
+export default function CartItem({retailer, productName, rating, price}) {
+    console.log(retailer);
     return (
         <Card className={styles.card}>
             <div className={styles.content}>
