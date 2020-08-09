@@ -18,6 +18,7 @@
     "mongodb": "^3.5.7",
     "node-fetch": "^2.6.0",
     "puppeteer": "^2.1.1",
+    "retrieval": "^1.7.2",
     "zombie": "^6.1.4"
   },
   "devDependencies": {
