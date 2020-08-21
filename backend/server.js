@@ -40,14 +40,14 @@ async function getClient() {
 client = getClient();
 
 async function search(){
-    let rt = new Retrieval((K = 1.9), (B = 0.75));
+    let rt = new Retrieval((K = 0.05), (B = 1.0));
     client = await client;
     let data = await client.db("product_info").collection("Denton, Texas").find({}).toArray();
     let productNames = data
       .map((prod) => prod.productName)
       .filter((prod) => prod != null);
     rt.index(productNames);
-    let results = rt.search("apples", 15);
+    let results = rt.search("bread", 15);
     console.log(results);
 }
 
