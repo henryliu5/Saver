@@ -1,3 +1,16 @@
-.title{
-    text-align: center;
+.title {
+    font-size: 10rem;
+    margin-bottom: 0;
+}
+
+.subtitle{
+    font-size: 3rem;
+}
+
+.instruction{
+    font-size: 0.8rem;
+}
+
+.main {
+    text-align:center;
 }
