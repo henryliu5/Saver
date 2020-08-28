@@ -1,0 +1,30 @@
+.OrderSummary {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    border-color: rgb(83 83 86);
+    border-radius: 0px 15px 15px 0px;
+    background-color: rgb(239 242 245);
+    text-align: center;
+    width: 35%;
+    font-family: Arial,Helvetica,sans-serif;
+}
+.original {
+    flex-grow: 1;
+    text-align: right;
+    font-size: 15px;
+}
+
+.savings {
+    text-align: right;
+    color: green;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.total {
+    text-align: right;
+    font-weight: bold;
+    font-size: 15px;
+}
+
