@@ -6,69 +6,69 @@ import {useState} from 'react';
 let temp = [
     {
         "retailer": "Walmart",
-        "productName": "apple",
+        "productName": "Gala Apples, each",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Walmart",
-        "productName": "apple",
+        "productName": "Natural Egg Carton 4/Pkg-6 Cavity",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Walmart",
-        "productName": "apple",
+        "productName": "Honeycrisp Apples, 3 lb bag",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Walmart",
-        "productName": "apple",
+        "productName": "Red Delicious Apples, 5 lb Bag",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Target",
-        "productName": "apple",
+        "productName": "Chewy Chocolate Chip Cookies - 13oz - Market Pantry™",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Target",
-        "productName": "banana",
+        "productName": "Banana - each",
         "rating": "3/5",
-        "price": "1.09/lb"
+        "price": 1.09
     },
     {
         "retailer": "Target",
-        "productName": "apple",
+        "productName": "Little Debbie Nutty Bars - 12ct",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Target",
-        "productName": "banana",
+        "productName": "Chiquita Plantain Bananas",
         "rating": "3/5",
-        "price": "1.09/lb"
+        "price": 1.09
     },
     {
         "retailer": "Kroger",
-        "productName": "apple",
+        "productName": "Apple - Honeycrisp",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Walmart",
-        "productName": "banana",
+        "productName": "Organic Gala Apples, 3 lb bag",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
     {
         "retailer": "Kroger",
-        "productName": "apple",
+        "productName": "Apple - Granny Smith - Small",
         "rating": "5/5",
-        "price": "1.06/lb"
+        "price": 1.06
     },
 ];
 
